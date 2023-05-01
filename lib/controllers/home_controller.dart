@@ -19,6 +19,7 @@ class HomeController extends GetxController{
         }
         print('result for device ${r.device}');
       }
+
     });
       flutterBluePlus.stopScan();
       isActiveBlue.value = true;

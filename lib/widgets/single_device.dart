@@ -15,6 +15,15 @@ class SingleDevice extends StatefulWidget {
 class _SingleDeviceState extends State<SingleDevice> {
   bool isConnected = false;
   List<BluetoothService> bluetoothServices = [];
+  getInfo()async{
+    List<BluetoothService> services = await widget.bluetoothDevice.discoverServices();
+    services.forEach((service) async {
+      print('========== service$service===================');
+      
+    });
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +63,7 @@ class _SingleDeviceState extends State<SingleDevice> {
                   });
                 }else {
                     await widget.bluetoothDevice.connect();
-                    List<BluetoothService> services = await widget.bluetoothDevice.discoverServices();
+                    getInfo();
 
                   // // Iterate through the services and get the UUID of each service
                   // services.forEach((service) {
