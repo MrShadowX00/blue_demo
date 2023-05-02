@@ -19,7 +19,7 @@ class _SingleDeviceState extends State<SingleDevice> {
     List<BluetoothService> services = await widget.bluetoothDevice.discoverServices();
     services.forEach((service) async {
       print('========== service$service===================');
-      
+
     });
 
   }
