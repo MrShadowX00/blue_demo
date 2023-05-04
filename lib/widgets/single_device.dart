@@ -15,15 +15,31 @@ class SingleDevice extends StatefulWidget {
 class _SingleDeviceState extends State<SingleDevice> {
   bool isConnected = false;
   List<BluetoothService> bluetoothServices = [];
+  List<BluetoothDevice> bluetoothDevices = [];
   getInfo()async{
-    List<BluetoothService> services = await widget.bluetoothDevice.discoverServices();
-    services.forEach((service) async {
+    bluetoothServices = await widget.bluetoothDevice.discoverServices();
+    bluetoothServices.forEach((service) async {
       print('========== service$service===================');
 
     });
 
   }
 
+  checkDevice()async{
+    bluetoothDevices = await  FlutterBluePlus.instance.connectedDevices;
+    bluetoothDevices.forEach((device) {
+      if(widget.bluetoothDevice == device){
+        isConnected = true;
+      }
+    });
+  }
+
+
+  @override
+  void initState() {
+    checkDevice();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +78,8 @@ class _SingleDeviceState extends State<SingleDevice> {
                     isConnected = !isConnected;
                   });
                 }else {
-                    await widget.bluetoothDevice.connect();
+
+                     await widget.bluetoothDevice.connect();
                     getInfo();
 
                   // // Iterate through the services and get the UUID of each service
